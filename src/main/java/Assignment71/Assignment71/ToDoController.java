@@ -35,24 +35,25 @@ public class ToDoController {
 
     //学習項目を入力した場合に必要学習時間が帰ってくるようにする
     @GetMapping("/studytime") //GetMappingに変更　クエリ文字で情報取得する仕様へ変更
-    public Map<String, Integer> getStudyTime(@RequestParam("learningContent") String learningContent) {
+    public Integer getStudyTime(@RequestParam("learningContent") String learningContent) {
 
         Map<String, Integer> studyList = new HashMap<>();
         studyList.put("ディクテーション", 1); //ket=学習内容　value＝学習時間
-        studyList.put("英文の音読", 1);
+        studyList.put("英文の音読", 2);
         studyList.put("オーバーラッピング", 1);
         studyList.put("単語暗記", 1);
-        studyList.put("文法学習", 1);
+        studyList.put("文法学習", 3);
         studyList.put("精読", 1);
         studyList.put("多読", 1);
 
         for (String key : studyList.keySet()) {
             if (key.equals(learningContent)) {
-                return studyList;
 
             }
         }
+        return studyList.get(learningContent);
     }
+}
 
 
 //String learningContent = studyTimeRequest.getLearningContent();

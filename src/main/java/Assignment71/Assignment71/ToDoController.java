@@ -1,9 +1,6 @@
 package Assignment71.Assignment71;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
@@ -37,27 +34,32 @@ public class ToDoController {
     }
 
     //学習項目を入力した場合に必要学習時間が帰ってくるようにする
-    @PostMapping("/studytime")
-    public String getStudyTime(@RequestBody StudyTimeRequest studyTimeRequest) {
+    @GetMapping("/studytime")
+    public Map<String, Integer> getStudyTime(@RequestParam("learningContent") String learningContent) {
+
         Map<String, Integer> studyList = new HashMap<>();
-        studyList.put("ディクテーション", 1); //ket=学習内容　値＝学習時間
+        studyList.put("ディクテーション", 1); //ket=学習内容　value＝学習時間
         studyList.put("英文の音読", 1);
         studyList.put("オーバーラッピング", 1);
         studyList.put("単語暗記", 1);
         studyList.put("文法学習", 1);
         studyList.put("精読", 1);
         studyList.put("多読", 1);
+
         for (String key : studyList.keySet()) {
-            if (key == studyTimeRequest) {
-                return "学習時間は" + studyTimeRequest.get(key) + "時間です。";
-            } else {
-                return "リストにない学習項目";
+            if (key.equals(learningContent)) {
+                return studyList;
+
             }
         }
     }
 
 
-
-
+//String learningContent = studyTimeRequest.getLearningContent();
+//int studyTime = studyList.get(learningContent);
+//return learningContent + "の学習時間は " + studyTime + " 時間です。";
+//} else {
+//return "リストにない学習項目";
+//}
 
 

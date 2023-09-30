@@ -1,11 +1,16 @@
 package Assignment71.Assignment71;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 
+import javax.print.DocFlavor;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.net.URI;
 
 @RestController
 
@@ -49,18 +54,21 @@ public class ToDoController {
         for (String key : studyList.keySet()) {
             if (key.equals(learningContent)) {
                 return learningContent + "の学習時間は" + studyList.get(learningContent) + "時間";
-            } else {
-                return "該当する項目がありません。";
             }
         }
+        return "該当する項目がありません。";
     }
+
+    //学習項目を追加してステータスコード201で返す仕様にする
+    @PostMapping("/createStudyList")
+    public ResponseEntity<String> createStudyList(@RequestBody CreateStudyList createStudyList, UriComponentsBuilder uriComponentsBuilder) {
+        URI uri = UriComponentsBuilder.fromUriString("http://localhost:8080").path("/createStudyList/{id}")
+                .buildAndExpand(6).toUri();
+        return ResponseEntity.created(uri).body("name successfully created");
+    }
+
 }
 
-//String learningContent = studyTimeRequest.getLearningContent();
-//int studyTime = studyList.get(learningContent);
-//return learningContent + "の学習時間は " + studyTime + " 時間です。";
-//} else {
-//return "リストにない学習項目";
-//}
+
 
 

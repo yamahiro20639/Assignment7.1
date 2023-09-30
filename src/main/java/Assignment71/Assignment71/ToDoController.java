@@ -51,7 +51,7 @@ public class ToDoController {
             if (key == studyTimeRequest) {
                 return "学習時間は" + studyTimeRequest.get(key) + "時間です。";
             } else {
-                return "リストにない学習項目です";
+                return "リストにない学習項目";
             }
         }
     }

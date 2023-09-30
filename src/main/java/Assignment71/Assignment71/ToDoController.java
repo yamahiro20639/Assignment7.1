@@ -34,7 +34,7 @@ public class ToDoController {
     }
 
     //学習項目を入力した場合に必要学習時間が帰ってくるようにする
-    @GetMapping("/studytime")
+    @GetMapping("/studytime") //GetMappingに変更　クエリ文字で情報取得する仕様へ変更
     public Map<String, Integer> getStudyTime(@RequestParam("learningContent") String learningContent) {
 
         Map<String, Integer> studyList = new HashMap<>();

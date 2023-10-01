@@ -1,14 +1,18 @@
 package Assignment71.Assignment71;
 
-public class StudyTimeRequest {
-
+public class DeleteStudyListRequest {
     private String learningContent;
 
-    StudyTimeRequest(String learningContent) {
+    public DeleteStudyListRequest(String learningContent) {
         this.learningContent = learningContent;
+    }
+
+    public DeleteStudyListRequest() {
+
     }
 
     public String getLearningContent() {
         return learningContent;
     }
+
 }

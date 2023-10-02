@@ -41,5 +41,20 @@ http://localhost:8080/studyTime?learningContent=英語嫌いだ
 <img width="1436" alt="スクリーンショット 2023-10-02 22 14 13" src="https://github.com/yamahiro20639/Assignment7.1/assets/144509349/4e39932a-6113-494f-988b-a1834b561b75">
 
 ## DELETE
+1.学習キーを指定してアクセスした場合、連携した学習内容が削除される <br>
+　アクセスする際に文字数１０文字以内の制限かつ空白やNullの場合は無効、数字は10以内と指定されている
+<img width="1434" alt="スクリーンショット 2023-10-02 22 22 23" src="https://github.com/yamahiro20639/Assignment7.1/assets/144509349/cc0873b0-580f-4922-bde9-929558f64cd6">
+
+<img width="1430" alt="スクリーンショット 2023-10-02 22 22 52" src="https://github.com/yamahiro20639/Assignment7.1/assets/144509349/5501b32e-1a93-4931-814f-2e9e3aa646c0">
+
+<img width="1433" alt="スクリーンショット 2023-10-02 22 23 28" src="https://github.com/yamahiro20639/Assignment7.1/assets/144509349/73e22364-4b07-4503-895d-9c7fd12f67ae">
+
+<img width="1436" alt="スクリーンショット 2023-10-02 22 23 47" src="https://github.com/yamahiro20639/Assignment7.1/assets/144509349/973fbb41-a9d7-4f55-8715-948478776a19">
+
+<img width="1436" alt="スクリーンショット 2023-10-02 22 24 26" src="https://github.com/yamahiro20639/Assignment7.1/assets/144509349/4a4bfab2-7962-4fe3-9ef6-b64e5ba78809">
+
+<img width="1439" alt="スクリーンショット 2023-10-02 22 25 07" src="https://github.com/yamahiro20639/Assignment7.1/assets/144509349/0a2aa4ea-9cfc-4c32-95f4-be4c2696dd85">
+
+
 
 

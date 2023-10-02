@@ -1,7 +1,10 @@
-package Assignment71.Assignment71;
+package Assignment71.Assignment71.PATCH;
+
 
 public class UpdateStudyListRequest {
+
     private String learningContent;
+
     private int studyTime;
 
     public UpdateStudyListRequest(String learningContent, int studyTime) {

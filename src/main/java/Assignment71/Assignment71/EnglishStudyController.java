@@ -1,29 +1,30 @@
 package Assignment71.Assignment71;
 
+import Assignment71.Assignment71.DELETE.RequestLearningKey;
+import Assignment71.Assignment71.GET.ListeningStudyToDoResponse;
+import Assignment71.Assignment71.GET.ReadingStudyToDoResponse;
+import Assignment71.Assignment71.PATCH.UpdateStudyListRequest;
+import Assignment71.Assignment71.POST.CreateLearningContentsRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-
-import javax.print.DocFlavor;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.net.URI;
-import java.util.ArrayList;
 
 @RestController
 
 //英語学習についてリスニングとリーディング別で学習リストと学習時間を表示　
-public class ToDoController {
+public class EnglishStudyController {
     @GetMapping("/studyOfListening")
     public List<ListeningStudyToDoResponse> getListeningToDoList() {
         List<ListeningStudyToDoResponse> list = List.of(
                 new ListeningStudyToDoResponse("ディクテーション", 1),
                 new ListeningStudyToDoResponse("英文の音読", 1),
-                new ListeningStudyToDoResponse("オーバーラッピング", 2),
-                new ListeningStudyToDoResponse("オーバーラッピング", 4)
+                new ListeningStudyToDoResponse("オーバーラッピング", 2)
         );
         return list;
     }
@@ -40,7 +41,8 @@ public class ToDoController {
     }
 
     //学習項目を入力した場合に必要学習時間が返ってくるようにする
-    @GetMapping("/studyTime") //GetMappingに変更　クエリ文字で情報取得する仕様へ変更
+    //クエリ文字で取得できるように実装
+    @GetMapping("/studyTime")
     public String getStudyTime(@RequestParam("learningContent") String learningContent) {
 
         Map<String, Integer> studyList = new HashMap<>();
@@ -54,24 +56,29 @@ public class ToDoController {
 
         for (String key : studyList.keySet()) {
             if (key.equals(learningContent)) {
-                return learningContent + "の学習時間は" + studyList.get(learningContent) + "時間";
+                return learningContent
+                        + "の学習時間は" + studyList.get(learningContent)
+                        + "時間";
             }
         }
         return "該当する項目がありません。";
     }
 
-    //ある学習カテゴリー(StudyCategory)へ学習項目(createStudyList)を追加、その際にlearningContentsId発行/ステータスコード201で返す仕様にする
+
+    //ある学習カテゴリー(StudyCategory)へ学習内容(learningContents)を追加、その際に番号(learningContentsId)も付与
+    //ステータスコード201で返すように実装
+    //バリデーション@NotBlankを実装
     @PostMapping("/EnglishStudyList/{StudyCategory}")
     public ResponseEntity<String> createStudyList(
             @PathVariable("StudyCategory") String studyCategory,
-            @RequestBody CreateStudyListRequest createStudyListRequest) {
+            @RequestBody @Validated CreateLearningContentsRequest createLearningContentsRequest) {
         URI uri = UriComponentsBuilder.fromUriString("http://localhost:8080")
                 .path("/EnglishStudyList/" + studyCategory + "/{learningContentsId}")
                 .buildAndExpand(1).toUri();
         return ResponseEntity.created(uri).body("learningContents successfully created");
     }
 
-    //学習項目(createStudyList)内のlearningContentsIdを指定して、その中身を修正する
+    //learningContentsIdを指定して、Idとリンクする学習内容を修正する
     @PatchMapping("/EnglishStudyList/{StudyCategory}/{learningContentsId}")
     public String updateStudyList(
             @PathVariable("StudyCategory") String studyCategory,
@@ -80,12 +87,10 @@ public class ToDoController {
         return "learningContents successfully updated";
     }
 
-    //学習項目を指定してアクセスした場合、連携した学習内容が削除される
-    @DeleteMapping("/EnglishStudyList/{learningContents}")
-    public String deleteStudyList(
-            @PathVariable("learningContents") String learningContents,
-            @RequestBody DeleteStudyListRequest deleteStudyListRequest) {
-
+    //学習キーを指定してアクセスした場合、連携した学習内容が削除される
+    //アクセスする際に文字数１０文字以内の制限かつ空白やNullの場合は無効、数字は10以内と指定されている
+    @DeleteMapping("/EnglishStudyList")
+    public String deleteStudyList(@RequestBody @Validated RequestLearningKey requestLearningKey) {
         Map<String, String> studyList = new HashMap<>();
         studyList.put("リスニング1", "ディクテーション");
         studyList.put("リスニング2", "英文の音読");
@@ -95,8 +100,8 @@ public class ToDoController {
         studyList.put("リーディング3", "精読");
 
         for (String key : studyList.keySet()) {
-            if (key.equals(learningContents)) {
-                return studyList.get(learningContents) + " " + "is successfully deleted";
+            if (key.equals(requestLearningKey.getLearningKey())) {
+                return studyList.get(requestLearningKey.getLearningKey()) + " " + "is successfully deleted";
             }
         }
         return "該当のデータはありません";

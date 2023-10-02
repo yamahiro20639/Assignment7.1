@@ -36,5 +36,10 @@ http://localhost:8080/studyTime?learningContent=英語嫌いだ
  <img width="1434" alt="スクリーンショット 2023-10-02 22 07 06" src="https://github.com/yamahiro20639/Assignment7.1/assets/144509349/3fb7db89-4d94-4549-859e-5fc770c98bb4">
 <img width="1435" alt="スクリーンショット 2023-10-02 22 08 47" src="https://github.com/yamahiro20639/Assignment7.1/assets/144509349/4e67b86f-535f-47a3-ba0f-bd68356aea60">
 
+## PATCH
+1.learningContentsIdを指定して、Idとリンクする学習内容を修正する
+<img width="1436" alt="スクリーンショット 2023-10-02 22 14 13" src="https://github.com/yamahiro20639/Assignment7.1/assets/144509349/4e39932a-6113-494f-988b-a1834b561b75">
+
+## DELETE
 
 

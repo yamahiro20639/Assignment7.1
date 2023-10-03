@@ -1,4 +1,4 @@
-package Assignment71.Assignment71.POST;
+package Assignment71.Assignment71.post;
 
 import jakarta.validation.constraints.NotBlank;
 

@@ -1,6 +1,4 @@
-package Assignment71.Assignment71.GET;
-
-import Assignment71.Assignment71.GET.StudyToDoResponse;
+package Assignment71.Assignment71.get;
 
 public class ReadingStudyToDoResponse extends StudyToDoResponse {
     public ReadingStudyToDoResponse(String studyList, int studyTime) {

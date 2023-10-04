@@ -14,7 +14,12 @@ public class ResponseStudyTime {
     // return learningContents;
     // }
 
-    public Integer getStudyTime() {
+    public Integer StudyTime() {
+
         return studyTime;
+    }
+
+    public String getStudyTime() {
+        return studyTime + "時間";
     }
 }

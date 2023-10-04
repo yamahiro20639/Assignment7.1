@@ -42,7 +42,7 @@ public class EnglishStudyController {
     //学習項目を入力した場合に必要学習時間が返ってくるようにする
     //クエリ文字で取得できるように実装
     @GetMapping("/studyTime")
-    public Integer getStudyTime(@RequestParam("learningContent") String learningContent) {
+    public Object getStudyTime(@RequestParam("learningContent") String learningContent) {
 
         Map<String, Integer> studyList = new HashMap<>();
         studyList.put("ディクテーション", 4); //ket=学習内容　value＝学習時間
@@ -54,13 +54,8 @@ public class EnglishStudyController {
         studyList.put("多読", 8);
 
         if (studyList.containsKey(learningContent)) {
-            ResponseStudyTime responseStudyTime = new ResponseStudyTime(studyList.get(learningContent));
-            return responseStudyTime.getStudyTime();
-            //return learningContent
-            //+ "の学習時間は" + studyList.get(learningContent)
-            //+ "時間";
+            return new ResponseStudyTime(studyList.get(learningContent));
         }
-
         return "該当する項目がありません。";
     }
 

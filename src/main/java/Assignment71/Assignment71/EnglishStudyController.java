@@ -1,10 +1,11 @@
 package Assignment71.Assignment71;
 
-import Assignment71.Assignment71.DELETE.RequestLearningKey;
-import Assignment71.Assignment71.GET.ListeningStudyToDoResponse;
-import Assignment71.Assignment71.GET.ReadingStudyToDoResponse;
-import Assignment71.Assignment71.PATCH.UpdateStudyListRequest;
-import Assignment71.Assignment71.POST.CreateLearningContentsRequest;
+import Assignment71.Assignment71.delete.RequestLearningKey;
+import Assignment71.Assignment71.get.ListeningStudyToDoResponse;
+import Assignment71.Assignment71.get.ReadingStudyToDoResponse;
+import Assignment71.Assignment71.get.ResponseStudyTime;
+import Assignment71.Assignment71.patch.UpdateStudyListRequest;
+import Assignment71.Assignment71.post.CreateLearningContentsRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,33 +18,31 @@ import java.net.URI;
 
 @RestController
 
-//英語学習についてリスニングとリーディング別で学習リストと学習時間を表示　
+//英語学習についてリスニングとリーディングでそれぞれ学習リストと学習時間を表示　
 public class EnglishStudyController {
     @GetMapping("/studyOfListening")
     public List<ListeningStudyToDoResponse> getListeningToDoList() {
-        List<ListeningStudyToDoResponse> list = List.of(
+        return List.of(
                 new ListeningStudyToDoResponse("ディクテーション", 1),
                 new ListeningStudyToDoResponse("英文の音読", 1),
                 new ListeningStudyToDoResponse("オーバーラッピング", 2)
         );
-        return list;
     }
 
     @GetMapping("/studyOfReading")
     public List<ReadingStudyToDoResponse> getReadingToDoList() {
-        List<ReadingStudyToDoResponse> list = List.of(
+        return List.of(
                 new ReadingStudyToDoResponse("単語暗記", 3),
                 new ReadingStudyToDoResponse("文法学習", 3),
                 new ReadingStudyToDoResponse("精読", 2),
                 new ReadingStudyToDoResponse("多読", 3)
         );
-        return list;
     }
 
     //学習項目を入力した場合に必要学習時間が返ってくるようにする
     //クエリ文字で取得できるように実装
     @GetMapping("/studyTime")
-    public String getStudyTime(@RequestParam("learningContent") String learningContent) {
+    public Object getStudyTime(@RequestParam("learningContent") String learningContent) {
 
         Map<String, Integer> studyList = new HashMap<>();
         studyList.put("ディクテーション", 4); //ket=学習内容　value＝学習時間
@@ -54,16 +53,11 @@ public class EnglishStudyController {
         studyList.put("精読", 7);
         studyList.put("多読", 8);
 
-        for (String key : studyList.keySet()) {
-            if (key.equals(learningContent)) {
-                return learningContent
-                        + "の学習時間は" + studyList.get(learningContent)
-                        + "時間";
-            }
+        if (studyList.containsKey(learningContent)) {
+            return new ResponseStudyTime(studyList.get(learningContent));
         }
         return "該当する項目がありません。";
     }
-
 
     //ある学習カテゴリー(StudyCategory)へ学習内容(learningContents)を追加、その際に番号(learningContentsId)も付与
     //ステータスコード201で返すように実装
@@ -75,7 +69,7 @@ public class EnglishStudyController {
         URI uri = UriComponentsBuilder.fromUriString("http://localhost:8080")
                 .path("/EnglishStudyList/" + studyCategory + "/{learningContentsId}")
                 .buildAndExpand(1).toUri();
-        return ResponseEntity.created(uri).body("learningContents successfully created");
+        return ResponseEntity.created(uri).body(createLearningContentsRequest.getLearningContents() + "has successfully created");
     }
 
     //learningContentsIdを指定して、Idとリンクする学習内容を修正する
@@ -99,10 +93,8 @@ public class EnglishStudyController {
         studyList.put("リーディング2", "文法学習");
         studyList.put("リーディング3", "精読");
 
-        for (String key : studyList.keySet()) {
-            if (key.equals(requestLearningKey.getLearningKey())) {
-                return studyList.get(requestLearningKey.getLearningKey()) + " " + "is successfully deleted";
-            }
+        if (studyList.containsKey(requestLearningKey.getLearningKey())) {
+            return studyList.get(requestLearningKey.getLearningKey()) + " " + "is successfully deleted";
         }
         return "該当のデータはありません";
     }

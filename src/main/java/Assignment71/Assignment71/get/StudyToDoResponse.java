@@ -1,4 +1,4 @@
-package Assignment71.Assignment71.GET;
+package Assignment71.Assignment71.get;
 
 public class StudyToDoResponse {
     private String studyList;

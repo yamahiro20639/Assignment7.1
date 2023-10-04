@@ -1,4 +1,4 @@
-package Assignment71.Assignment71.PATCH;
+package Assignment71.Assignment71.patch;
 
 
 public class UpdateStudyListRequest {
